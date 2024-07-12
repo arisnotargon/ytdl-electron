@@ -2,12 +2,11 @@
   "main": "dist/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "webpack --stats errors-warnings -w",
+    "build": "webpack --stats errors-warnings",
     "production": "webpack --mode=production"
   },
   "devDependencies": {
-    "@material-ui/core": "^4.12.4",
-    "@material-ui/icons": "^4.11.3",
+    "@types/cheerio": "^0.22.35",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
@@ -28,6 +27,11 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.16.0",
-    "@mui/material": "^5.16.0"
+    "@mui/material": "^5.16.0",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "axios": "^1.7.2",
+    "cheerio": "^1.0.0-rc.12",
+    "styled-components": "^6.1.11",
+    "ytdl-core": "^4.11.5"
   }
 }
