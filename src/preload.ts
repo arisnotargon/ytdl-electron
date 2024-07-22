@@ -6,5 +6,8 @@ contextBridge.exposeInMainWorld("electronAPI", {
   on: (channel: string, func: (...args: unknown[]) => void) => {
     ipcRenderer.on(channel, (event, ...args) => func(...args));
   },
-  // 可以根据需要添加更多方法
+  removeListener: (channel: string, func: (...args: any[]) => void) => {
+    // 移除监听器
+    ipcRenderer.removeListener(channel, func);
+  },
 });

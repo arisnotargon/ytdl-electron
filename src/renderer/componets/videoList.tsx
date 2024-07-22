@@ -9,6 +9,7 @@ import {
   InputLabel,
   Button,
 } from "@mui/material";
+import { EVENT_NAME } from "../../enum";
 
 interface VideoListProps {
   videoList: VideoInfo[];
@@ -21,13 +22,21 @@ interface VidFormatIdMap {
 const VideoList: React.FC<VideoListProps> = ({ videoList }) => {
   // 添加到下载队列的函数（示例，需要根据实际情况实现）
   const addToDownloadQueue = (video: VideoInfo) => {
+    const electronAPI = window.electronAPI;
     const format = video.videoFormats.find(
       (format) => String(format.itag) === selectedFormat[video.videoId]
     );
+    if (format === undefined) {
+      return;
+    }
+
     console.log(
       `Adding ${video.title} with format ${format} to download queue.`,
       format
     );
+
+    electronAPI.send(EVENT_NAME.AddDlQueue, video.videoId + "/" + format.itag);
+
     // 实现添加到下载队列的逻辑
   };
   const [selectedFormat, setSelectedFormat] = useState({} as VidFormatIdMap);
@@ -87,32 +96,6 @@ const VideoList: React.FC<VideoListProps> = ({ videoList }) => {
                 </Button>
               </Grid>
             </Grid>
-
-            {/* <form>
-              {video.videoFormats.map((format, formatIndex) => (
-                <div key={formatIndex}>
-                  <input
-                    type="radio"
-                    id={`format-${format.itag}-${index}`}
-                    name={`videoFormat-${index}`}
-                    value={format.itag}
-                    checked={selectedFormat[video.videoId] === format.itag}
-                    onChange={() =>
-                      setSelectedFormat({
-                        ...selectedFormat,
-                        [video.videoId]: format.itag,
-                      })
-                    }
-                  />
-                  <label htmlFor={`format-${format.itag}-${index}`}>
-                    {format.qualityLabel}-{format.container}
-                  </label>
-                </div>
-              ))}
-              <button type="button" onClick={() => addToDownloadQueue(video)}>
-                Add to Download Queue
-              </button>
-            </form> */}
           </Grid>
         );
       })}
